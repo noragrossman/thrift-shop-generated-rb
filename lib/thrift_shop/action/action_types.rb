@@ -611,6 +611,101 @@ module ThriftShop
       ::Thrift::Struct.generate_accessors self
     end
 
+    class EventUniqueIdentifiers < ::Thrift::Union
+      include ::Thrift::Struct_Union
+      class << self
+        def uids(val)
+          EventUniqueIdentifiers.new(:uids, val)
+        end
+      end
+
+      UIDS = 1
+
+      FIELDS = {
+        UIDS => {:type => ::Thrift::Types::LIST, :name => 'uids', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+        raise(StandardError, 'Union fields are not set.') if get_set_field.nil? || get_value.nil?
+      end
+
+      ::Thrift::Union.generate_accessors self
+    end
+
+    class Event
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      UID = 1
+      TITLE = 2
+      START_DATE = 3
+      END_DATE = 4
+      LOCATION = 5
+      DESCRIPTION = 6
+      RICH_TEXT_DESCRIPTION = 7
+      IMAGE = 8
+      CREATOR_ENTITY_UUID = 9
+      IS_APPROVED = 10
+      COST = 11
+      EXTERNAL_LINK_URL = 12
+
+      FIELDS = {
+        UID => {:type => ::Thrift::Types::STRING, :name => 'uid'},
+        TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        START_DATE => {:type => ::Thrift::Types::STRING, :name => 'start_date'},
+        END_DATE => {:type => ::Thrift::Types::STRING, :name => 'end_date'},
+        LOCATION => {:type => ::Thrift::Types::STRING, :name => 'location'},
+        DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'description'},
+        RICH_TEXT_DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'rich_text_description'},
+        IMAGE => {:type => ::Thrift::Types::STRING, :name => 'image'},
+        CREATOR_ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'creator_entity_uuid'},
+        IS_APPROVED => {:type => ::Thrift::Types::BOOL, :name => 'is_approved'},
+        COST => {:type => ::Thrift::Types::STRING, :name => 'cost'},
+        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class Events
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      EVENTS = 1
+
+      FIELDS = {
+        EVENTS => {:type => ::Thrift::Types::LIST, :name => 'events', :element => {:type => ::Thrift::Types::STRUCT, :class => ::ThriftShop::Action::Event}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class PaginatedEvents
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGE_INFO = 1
+      EVENTS = 2
+
+      FIELDS = {
+        PAGE_INFO => {:type => ::Thrift::Types::STRUCT, :name => 'page_info', :class => ::ThriftShop::Shared::BoundaryLimitPageInfo},
+        EVENTS => {:type => ::Thrift::Types::LIST, :name => 'events', :element => {:type => ::Thrift::Types::STRUCT, :class => ::ThriftShop::Action::Event}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class GetEntitySignaturesFilterParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
       PETITION_UIDS = 1
@@ -1257,6 +1352,108 @@ module ThriftShop
 
       FIELDS = {
         PETITION_UID => {:type => ::Thrift::Types::STRING, :name => 'petition_uid'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventsByIdentifiersRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      EVENT_IDENTIFIERS = 1
+
+      FIELDS = {
+        EVENT_IDENTIFIERS => {:type => ::Thrift::Types::STRUCT, :name => 'event_identifiers', :class => ::ThriftShop::Action::EventUniqueIdentifiers}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventsFilterParams
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      CAMPAIGN_UIDS = 1
+      SHOW_ONLY_UPCOMING = 2
+
+      FIELDS = {
+        CAMPAIGN_UIDS => {:type => ::Thrift::Types::LIST, :name => 'campaign_uids', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventsRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGINATION_PARAMS = 1
+      FILTER_PARAMS = 2
+
+      FIELDS = {
+        PAGINATION_PARAMS => {:type => ::Thrift::Types::STRUCT, :name => 'pagination_params', :class => ::ThriftShop::Shared::BoundaryLimitPaginationParams},
+        FILTER_PARAMS => {:type => ::Thrift::Types::STRUCT, :name => 'filter_params', :class => ::ThriftShop::Action::GetEventsFilterParams}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class CreateEventRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      UID = 1
+      TITLE = 2
+      START_DATE = 3
+      END_DATE = 4
+      LOCATION = 5
+      DESCRIPTION = 6
+      RICH_TEXT_DESCRIPTION = 7
+      IMAGE = 8
+      COST = 9
+      EXTERNAL_LINK_URL = 10
+
+      FIELDS = {
+        UID => {:type => ::Thrift::Types::STRING, :name => 'uid'},
+        TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
+        START_DATE => {:type => ::Thrift::Types::STRING, :name => 'start_date'},
+        END_DATE => {:type => ::Thrift::Types::STRING, :name => 'end_date'},
+        LOCATION => {:type => ::Thrift::Types::STRING, :name => 'location'},
+        DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'description'},
+        RICH_TEXT_DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'rich_text_description'},
+        IMAGE => {:type => ::Thrift::Types::STRING, :name => 'image'},
+        COST => {:type => ::Thrift::Types::STRING, :name => 'cost'},
+        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class DeleteEventRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      EVENT_UID = 1
+
+      FIELDS = {
+        EVENT_UID => {:type => ::Thrift::Types::STRING, :name => 'event_uid'}
       }
 
       def struct_fields; FIELDS; end

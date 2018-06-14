@@ -459,6 +459,71 @@ module ThriftShop
           return
         end
 
+        def get_events_by_identifiers(headers, request)
+          send_get_events_by_identifiers(headers, request)
+          return recv_get_events_by_identifiers()
+        end
+
+        def send_get_events_by_identifiers(headers, request)
+          send_message('get_events_by_identifiers', Get_events_by_identifiers_args, :headers => headers, :request => request)
+        end
+
+        def recv_get_events_by_identifiers()
+          result = receive_message(Get_events_by_identifiers_result)
+          return result.success unless result.success.nil?
+          raise result.argument_exception unless result.argument_exception.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get_events_by_identifiers failed: unknown result')
+        end
+
+        def get_events(headers, request)
+          send_get_events(headers, request)
+          return recv_get_events()
+        end
+
+        def send_get_events(headers, request)
+          send_message('get_events', Get_events_args, :headers => headers, :request => request)
+        end
+
+        def recv_get_events()
+          result = receive_message(Get_events_result)
+          return result.success unless result.success.nil?
+          raise result.argument_exception unless result.argument_exception.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get_events failed: unknown result')
+        end
+
+        def create_event(headers, request)
+          send_create_event(headers, request)
+          return recv_create_event()
+        end
+
+        def send_create_event(headers, request)
+          send_message('create_event', Create_event_args, :headers => headers, :request => request)
+        end
+
+        def recv_create_event()
+          result = receive_message(Create_event_result)
+          return result.success unless result.success.nil?
+          raise result.argument_exception unless result.argument_exception.nil?
+          raise result.unauthorized_exception unless result.unauthorized_exception.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'create_event failed: unknown result')
+        end
+
+        def delete_event(headers, request)
+          send_delete_event(headers, request)
+          recv_delete_event()
+        end
+
+        def send_delete_event(headers, request)
+          send_message('delete_event', Delete_event_args, :headers => headers, :request => request)
+        end
+
+        def recv_delete_event()
+          result = receive_message(Delete_event_result)
+          raise result.state_exception unless result.state_exception.nil?
+          raise result.unauthorized_exception unless result.unauthorized_exception.nil?
+          return
+        end
+
       end
 
       class Processor
@@ -793,6 +858,54 @@ module ThriftShop
             result.petition_state_exception = petition_state_exception
           end
           write_result(result, oprot, 'send_grading_notifications', seqid)
+        end
+
+        def process_get_events_by_identifiers(seqid, iprot, oprot)
+          args = read_args(iprot, Get_events_by_identifiers_args)
+          result = Get_events_by_identifiers_result.new()
+          begin
+            result.success = @handler.get_events_by_identifiers(args.headers, args.request)
+          rescue ::ThriftShop::Shared::ArgumentException => argument_exception
+            result.argument_exception = argument_exception
+          end
+          write_result(result, oprot, 'get_events_by_identifiers', seqid)
+        end
+
+        def process_get_events(seqid, iprot, oprot)
+          args = read_args(iprot, Get_events_args)
+          result = Get_events_result.new()
+          begin
+            result.success = @handler.get_events(args.headers, args.request)
+          rescue ::ThriftShop::Shared::ArgumentException => argument_exception
+            result.argument_exception = argument_exception
+          end
+          write_result(result, oprot, 'get_events', seqid)
+        end
+
+        def process_create_event(seqid, iprot, oprot)
+          args = read_args(iprot, Create_event_args)
+          result = Create_event_result.new()
+          begin
+            result.success = @handler.create_event(args.headers, args.request)
+          rescue ::ThriftShop::Shared::ArgumentException => argument_exception
+            result.argument_exception = argument_exception
+          rescue ::ThriftShop::Shared::UnauthorizedException => unauthorized_exception
+            result.unauthorized_exception = unauthorized_exception
+          end
+          write_result(result, oprot, 'create_event', seqid)
+        end
+
+        def process_delete_event(seqid, iprot, oprot)
+          args = read_args(iprot, Delete_event_args)
+          result = Delete_event_result.new()
+          begin
+            @handler.delete_event(args.headers, args.request)
+          rescue ::ThriftShop::Shared::StateException => state_exception
+            result.state_exception = state_exception
+          rescue ::ThriftShop::Shared::UnauthorizedException => unauthorized_exception
+            result.unauthorized_exception = unauthorized_exception
+          end
+          write_result(result, oprot, 'delete_event', seqid)
         end
 
       end
@@ -1790,6 +1903,152 @@ module ThriftShop
           STATE_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'state_exception', :class => ::ThriftShop::Shared::StateException},
           UNAUTHORIZED_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'unauthorized_exception', :class => ::ThriftShop::Shared::UnauthorizedException},
           PETITION_STATE_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'petition_state_exception', :class => ::ThriftShop::Action::PetitionStateException}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_events_by_identifiers_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        HEADERS = 1
+        REQUEST = 2
+
+        FIELDS = {
+          HEADERS => {:type => ::Thrift::Types::STRUCT, :name => 'headers', :class => ::ThriftShop::Shared::RequestHeaders},
+          REQUEST => {:type => ::Thrift::Types::STRUCT, :name => 'request', :class => ::ThriftShop::Action::GetEventsByIdentifiersRequest}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_events_by_identifiers_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        ARGUMENT_EXCEPTION = 1
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::ThriftShop::Action::Events},
+          ARGUMENT_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'argument_exception', :class => ::ThriftShop::Shared::ArgumentException}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_events_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        HEADERS = 1
+        REQUEST = 2
+
+        FIELDS = {
+          HEADERS => {:type => ::Thrift::Types::STRUCT, :name => 'headers', :class => ::ThriftShop::Shared::RequestHeaders},
+          REQUEST => {:type => ::Thrift::Types::STRUCT, :name => 'request', :class => ::ThriftShop::Action::GetEventsRequest}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_events_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        ARGUMENT_EXCEPTION = 1
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::ThriftShop::Action::PaginatedEvents},
+          ARGUMENT_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'argument_exception', :class => ::ThriftShop::Shared::ArgumentException}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Create_event_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        HEADERS = 1
+        REQUEST = 2
+
+        FIELDS = {
+          HEADERS => {:type => ::Thrift::Types::STRUCT, :name => 'headers', :class => ::ThriftShop::Shared::RequestHeaders},
+          REQUEST => {:type => ::Thrift::Types::STRUCT, :name => 'request', :class => ::ThriftShop::Action::CreateEventRequest}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Create_event_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        ARGUMENT_EXCEPTION = 1
+        UNAUTHORIZED_EXCEPTION = 2
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::ThriftShop::Action::Event},
+          ARGUMENT_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'argument_exception', :class => ::ThriftShop::Shared::ArgumentException},
+          UNAUTHORIZED_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'unauthorized_exception', :class => ::ThriftShop::Shared::UnauthorizedException}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Delete_event_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        HEADERS = 1
+        REQUEST = 2
+
+        FIELDS = {
+          HEADERS => {:type => ::Thrift::Types::STRUCT, :name => 'headers', :class => ::ThriftShop::Shared::RequestHeaders},
+          REQUEST => {:type => ::Thrift::Types::STRUCT, :name => 'request', :class => ::ThriftShop::Action::DeleteEventRequest}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Delete_event_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        STATE_EXCEPTION = 1
+        UNAUTHORIZED_EXCEPTION = 2
+
+        FIELDS = {
+          STATE_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'state_exception', :class => ::ThriftShop::Shared::StateException},
+          UNAUTHORIZED_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'unauthorized_exception', :class => ::ThriftShop::Shared::UnauthorizedException}
         }
 
         def struct_fields; FIELDS; end
