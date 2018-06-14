@@ -1398,11 +1398,9 @@ module ThriftShop
 
     class GetEventsFilterParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      CAMPAIGN_UIDS = 1
-      SHOW_ONLY_UPCOMING = 2
+      SHOW_ONLY_UPCOMING = 1
 
       FIELDS = {
-        CAMPAIGN_UIDS => {:type => ::Thrift::Types::LIST, :name => 'campaign_uids', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
         SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true}
       }
 
