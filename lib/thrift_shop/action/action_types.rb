@@ -706,6 +706,24 @@ module ThriftShop
       ::Thrift::Struct.generate_accessors self
     end
 
+    class PaginatedAttendeeUids
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGE_INFO = 1
+      ATTENDEE_UIDS = 2
+
+      FIELDS = {
+        PAGE_INFO => {:type => ::Thrift::Types::STRUCT, :name => 'page_info', :class => ::ThriftShop::Shared::BoundaryLimitPageInfo},
+        ATTENDEE_UIDS => {:type => ::Thrift::Types::LIST, :name => 'attendee_uids', :element => {:type => ::Thrift::Types::STRING}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class GetEntitySignaturesFilterParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
       PETITION_UIDS = 1
@@ -1447,6 +1465,40 @@ module ThriftShop
     end
 
     class DeleteEventRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      EVENT_UID = 1
+
+      FIELDS = {
+        EVENT_UID => {:type => ::Thrift::Types::STRING, :name => 'event_uid'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventAttendeeUidsRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGINATION_PARAMS = 1
+      EVENT_UID = 2
+
+      FIELDS = {
+        PAGINATION_PARAMS => {:type => ::Thrift::Types::STRUCT, :name => 'pagination_params', :class => ::ThriftShop::Shared::BoundaryLimitPaginationParams},
+        EVENT_UID => {:type => ::Thrift::Types::STRING, :name => 'event_uid'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class AttendEventRequest
       include ::Thrift::Struct, ::Thrift::Struct_Union
       EVENT_UID = 1
 

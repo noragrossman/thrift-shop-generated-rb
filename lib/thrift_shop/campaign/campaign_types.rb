@@ -259,6 +259,24 @@ module ThriftShop
       ::Thrift::Struct.generate_accessors self
     end
 
+    class PaginatedEventUids
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGE_INFO = 1
+      EVENT_UIDS = 2
+
+      FIELDS = {
+        PAGE_INFO => {:type => ::Thrift::Types::STRUCT, :name => 'page_info', :class => ::ThriftShop::Shared::BoundaryLimitPageInfo},
+        EVENT_UIDS => {:type => ::Thrift::Types::LIST, :name => 'event_uids', :element => {:type => ::Thrift::Types::STRING}}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class GetSupportedCampaignUidsFilterParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
       CAMPAIGN_UIDS = 1
@@ -765,6 +783,24 @@ module ThriftShop
       CAMPAIGN_UID = 1
 
       FIELDS = {
+        CAMPAIGN_UID => {:type => ::Thrift::Types::STRING, :name => 'campaign_uid'}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventUidsRequest
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      PAGE_INFO = 1
+      CAMPAIGN_UID = 2
+
+      FIELDS = {
+        PAGE_INFO => {:type => ::Thrift::Types::STRUCT, :name => 'page_info', :class => ::ThriftShop::Shared::BoundaryLimitPaginationParams},
         CAMPAIGN_UID => {:type => ::Thrift::Types::STRING, :name => 'campaign_uid'}
       }
 

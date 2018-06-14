@@ -376,6 +376,22 @@ module ThriftShop
           raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get_campaign_supporters failed: unknown result')
         end
 
+        def get_event_uids(headers, request)
+          send_get_event_uids(headers, request)
+          return recv_get_event_uids()
+        end
+
+        def send_get_event_uids(headers, request)
+          send_message('get_event_uids', Get_event_uids_args, :headers => headers, :request => request)
+        end
+
+        def recv_get_event_uids()
+          result = receive_message(Get_event_uids_result)
+          return result.success unless result.success.nil?
+          raise result.argument_exception unless result.argument_exception.nil?
+          raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get_event_uids failed: unknown result')
+        end
+
       end
 
       class Processor
@@ -651,6 +667,17 @@ module ThriftShop
             result.argument_exception = argument_exception
           end
           write_result(result, oprot, 'get_campaign_supporters', seqid)
+        end
+
+        def process_get_event_uids(seqid, iprot, oprot)
+          args = read_args(iprot, Get_event_uids_args)
+          result = Get_event_uids_result.new()
+          begin
+            result.success = @handler.get_event_uids(args.headers, args.request)
+          rescue ::ThriftShop::Shared::ArgumentException => argument_exception
+            result.argument_exception = argument_exception
+          end
+          write_result(result, oprot, 'get_event_uids', seqid)
         end
 
       end
@@ -1461,6 +1488,42 @@ module ThriftShop
 
         FIELDS = {
           SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::ThriftShop::Campaign::PaginatedCampaignSupporters},
+          ARGUMENT_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'argument_exception', :class => ::ThriftShop::Shared::ArgumentException}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_event_uids_args
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        HEADERS = 1
+        REQUEST = 2
+
+        FIELDS = {
+          HEADERS => {:type => ::Thrift::Types::STRUCT, :name => 'headers', :class => ::ThriftShop::Shared::RequestHeaders},
+          REQUEST => {:type => ::Thrift::Types::STRUCT, :name => 'request', :class => ::ThriftShop::Campaign::GetEventUidsRequest}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
+      class Get_event_uids_result
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        SUCCESS = 0
+        ARGUMENT_EXCEPTION = 1
+
+        FIELDS = {
+          SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::ThriftShop::Campaign::PaginatedEventUids},
           ARGUMENT_EXCEPTION => {:type => ::Thrift::Types::STRUCT, :name => 'argument_exception', :class => ::ThriftShop::Shared::ArgumentException}
         }
 
