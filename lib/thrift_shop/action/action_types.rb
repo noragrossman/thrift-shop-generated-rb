@@ -1416,19 +1416,17 @@ module ThriftShop
 
     class CreateEventRequest
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      UID = 1
-      TITLE = 2
-      START_DATE = 3
-      END_DATE = 4
-      LOCATION = 5
-      DESCRIPTION = 6
-      RICH_TEXT_DESCRIPTION = 7
-      IMAGE = 8
-      COST = 9
-      EXTERNAL_LINK_URL = 10
+      TITLE = 1
+      START_DATE = 2
+      END_DATE = 3
+      LOCATION = 4
+      DESCRIPTION = 5
+      RICH_TEXT_DESCRIPTION = 6
+      IMAGE = 7
+      COST = 8
+      EXTERNAL_LINK_URL = 9
 
       FIELDS = {
-        UID => {:type => ::Thrift::Types::STRING, :name => 'uid'},
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
         START_DATE => {:type => ::Thrift::Types::STRING, :name => 'start_date'},
         END_DATE => {:type => ::Thrift::Types::STRING, :name => 'end_date'},
