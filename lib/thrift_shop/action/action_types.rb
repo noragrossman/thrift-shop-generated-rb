@@ -806,10 +806,12 @@ module ThriftShop
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SHOW_ONLY_UPCOMING = 1
       ENTITY_UUID = 2
+      EVENT_UIDS = 3
 
       FIELDS = {
         SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true},
-        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid', :optional => true}
+        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid', :optional => true},
+        EVENT_UIDS => {:type => ::Thrift::Types::LIST, :name => 'event_uids', :element => {:type => ::Thrift::Types::STRING}, :optional => true}
       }
 
       def struct_fields; FIELDS; end
