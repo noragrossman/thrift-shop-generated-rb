@@ -802,6 +802,40 @@ module ThriftShop
       ::Thrift::Struct.generate_accessors self
     end
 
+    class GetEventsFilterParams
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SHOW_ONLY_UPCOMING = 1
+      ENTITY_UUID = 2
+
+      FIELDS = {
+        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true},
+        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid', :optional => true}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
+    class GetEventsByIdentifiersFilterParams
+      include ::Thrift::Struct, ::Thrift::Struct_Union
+      SHOW_ONLY_UPCOMING = 1
+
+      FIELDS = {
+        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true}
+      }
+
+      def struct_fields; FIELDS; end
+
+      def validate
+      end
+
+      ::Thrift::Struct.generate_accessors self
+    end
+
     class GetEntitySignaturesSortParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SORT_FIELD = 1
@@ -1385,27 +1419,11 @@ module ThriftShop
     class GetEventsByIdentifiersRequest
       include ::Thrift::Struct, ::Thrift::Struct_Union
       EVENT_IDENTIFIERS = 1
+      FILTER_PARAMS = 2
 
       FIELDS = {
-        EVENT_IDENTIFIERS => {:type => ::Thrift::Types::STRUCT, :name => 'event_identifiers', :class => ::ThriftShop::Action::EventUniqueIdentifiers}
-      }
-
-      def struct_fields; FIELDS; end
-
-      def validate
-      end
-
-      ::Thrift::Struct.generate_accessors self
-    end
-
-    class GetEventsFilterParams
-      include ::Thrift::Struct, ::Thrift::Struct_Union
-      SHOW_ONLY_UPCOMING = 1
-      ENTITY_UUID = 2
-
-      FIELDS = {
-        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true},
-        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid', :optional => true}
+        EVENT_IDENTIFIERS => {:type => ::Thrift::Types::STRUCT, :name => 'event_identifiers', :class => ::ThriftShop::Action::EventUniqueIdentifiers},
+        FILTER_PARAMS => {:type => ::Thrift::Types::STRUCT, :name => 'filter_params', :class => ::ThriftShop::Action::GetEventsByIdentifiersFilterParams}
       }
 
       def struct_fields; FIELDS; end
