@@ -1499,9 +1499,11 @@ module ThriftShop
     class AttendEventRequest
       include ::Thrift::Struct, ::Thrift::Struct_Union
       EVENT_UID = 1
+      ENTITY_UUID = 2
 
       FIELDS = {
-        EVENT_UID => {:type => ::Thrift::Types::STRING, :name => 'event_uid'}
+        EVENT_UID => {:type => ::Thrift::Types::STRING, :name => 'event_uid'},
+        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid'}
       }
 
       def struct_fields; FIELDS; end
