@@ -648,6 +648,7 @@ module ThriftShop
       IS_APPROVED = 10
       COST = 11
       EXTERNAL_LINK_URL = 12
+      PLACE_ID = 13
 
       FIELDS = {
         UID => {:type => ::Thrift::Types::STRING, :name => 'uid'},
@@ -661,7 +662,8 @@ module ThriftShop
         CREATOR_ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'creator_entity_uuid'},
         IS_APPROVED => {:type => ::Thrift::Types::BOOL, :name => 'is_approved'},
         COST => {:type => ::Thrift::Types::STRING, :name => 'cost'},
-        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'}
+        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'},
+        PLACE_ID => {:type => ::Thrift::Types::STRING, :name => 'place_id'}
       }
 
       def struct_fields; FIELDS; end
@@ -1399,9 +1401,11 @@ module ThriftShop
     class GetEventsFilterParams
       include ::Thrift::Struct, ::Thrift::Struct_Union
       SHOW_ONLY_UPCOMING = 1
+      ENTITY_UUID = 2
 
       FIELDS = {
-        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true}
+        SHOW_ONLY_UPCOMING => {:type => ::Thrift::Types::BOOL, :name => 'show_only_upcoming', :optional => true},
+        ENTITY_UUID => {:type => ::Thrift::Types::STRING, :name => 'entity_uuid', :optional => true}
       }
 
       def struct_fields; FIELDS; end
@@ -1441,6 +1445,7 @@ module ThriftShop
       IMAGE = 7
       COST = 8
       EXTERNAL_LINK_URL = 9
+      PLACE_ID = 10
 
       FIELDS = {
         TITLE => {:type => ::Thrift::Types::STRING, :name => 'title'},
@@ -1451,7 +1456,8 @@ module ThriftShop
         RICH_TEXT_DESCRIPTION => {:type => ::Thrift::Types::STRING, :name => 'rich_text_description'},
         IMAGE => {:type => ::Thrift::Types::STRING, :name => 'image'},
         COST => {:type => ::Thrift::Types::STRING, :name => 'cost'},
-        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'}
+        EXTERNAL_LINK_URL => {:type => ::Thrift::Types::STRING, :name => 'external_link_url'},
+        PLACE_ID => {:type => ::Thrift::Types::STRING, :name => 'place_id'}
       }
 
       def struct_fields; FIELDS; end

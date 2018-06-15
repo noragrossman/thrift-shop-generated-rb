@@ -796,11 +796,11 @@ module ThriftShop
 
     class GetEventUidsRequest
       include ::Thrift::Struct, ::Thrift::Struct_Union
-      PAGE_INFO = 1
+      PAGINATION_PARAMS = 1
       CAMPAIGN_UID = 2
 
       FIELDS = {
-        PAGE_INFO => {:type => ::Thrift::Types::STRUCT, :name => 'page_info', :class => ::ThriftShop::Shared::BoundaryLimitPaginationParams},
+        PAGINATION_PARAMS => {:type => ::Thrift::Types::STRUCT, :name => 'pagination_params', :class => ::ThriftShop::Shared::BoundaryLimitPaginationParams},
         CAMPAIGN_UID => {:type => ::Thrift::Types::STRING, :name => 'campaign_uid'}
       }
 
